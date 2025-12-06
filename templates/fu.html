@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Franchise Unit: {{ fu.name }}</h1>
+<p><strong>Code:</strong> {{ fu.code }}</p>
+<p><strong>Country:</strong> {{ fu.country.name }} ({{ fu.country.code }})</p>
+<p><strong>Field office:</strong> {{ fu.field_office_address }}</p>
+
+<h2>Stats</h2>
+<ul class="stats-list">
+  <li>Citizens: {{ citizens_count }}</li>
+  <li>Population (ledger est.): {{ population_count }}</li>
+  <li>Dues last month: ${{ '%.2f'|format(dues_last_month) }}</li>
+  <li>Benefits paid last month: ${{ '%.2f'|format(benefits_last_month) }}</li>
+</ul>
+
+<section class="board">
+  <h2>Local Boards (Prototype)</h2>
+  <p>Public boards (Needs / Offers / Projects) will appear here in future iterations.</p>
+</section>
+{% endblock %}

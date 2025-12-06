@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Franchise Cooperative Civilization</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-title">
+      <a href="{{ url_for('index') }}">Franchise Cooperative Civilization</a>
+      <span class="tagline">Feed the World · Fund the World · Free the World</span>
+    </div>
+    <nav class="top-nav">
+      <a href="{{ url_for('regions') }}">Regions</a>
+      <a href="{{ url_for('index') }}#how-it-works">How it works</a>
+      {% if current_user.is_authenticated %}
+        <a href="{{ url_for('dashboard') }}">My Dashboard</a>
+        {% if current_user.is_admin %}
+          <a href="{{ url_for('admin_users') }}">Admin</a>
+        {% endif %}
+        <a href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Login with PayPal</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main class="content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-container">
+          {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <p>Prototype build · Not a government · A voluntary cooperative.</p>
+  </footer>
+</body>
+</html>

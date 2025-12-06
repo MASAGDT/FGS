@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Admin – Users</h1>
+
+<table class="list-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>PayPal ID</th>
+      <th>Citizen</th>
+      <th>Admin</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in users %}
+      <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email or 'n/a' }}</td>
+        <td>{{ user.paypal_id }}</td>
+        <td>{{ "Yes" if user.is_citizen else "No" }}</td>
+        <td>{{ "Yes" if user.is_admin else "No" }}</td>
+        <td>
+          {% if current_user.id != user.id %}
+          <form action="{{ url_for('admin_delete_user', user_id=user.id) }}"
+                method="post" onsubmit="return confirm('Delete this user?');">
+            <button type="submit" class="btn danger">Delete</button>
+          </form>
+          {% else %}
+            <em>self</em>
+          {% endif %}
+        </td>
+      </tr>
+    {% else %}
+      <tr><td colspan="7">No users found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

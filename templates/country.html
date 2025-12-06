@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ country.name }} ({{ country.code }})</h1>
+
+<h2>Franchise Units</h2>
+<table class="list-table">
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Citizens (est)</th>
+      <th>Dues Last Month</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for fu in country.franchise_units %}
+      <tr>
+        <td>{{ fu.code }}</td>
+        <td>{{ fu.name }}</td>
+        <td>{{ fu.citizens_count }}</td>
+        <td>${{ '%.2f'|format(fu.dues_last_month) }}</td>
+        <td><a href="{{ url_for('fu_view', code=fu.code) }}">View FU</a></td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5">No Franchise Units yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

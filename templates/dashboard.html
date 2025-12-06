@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>My Dashboard</h1>
+
+<section class="dashboard-grid">
+  <div class="card">
+    <h2>Status</h2>
+    <p><strong>Name:</strong> {{ current_user.name }}</p>
+    <p><strong>Citizen:</strong> {{ "Yes" if current_user.is_citizen else "No" }}</p>
+    <p><strong>Franchise Unit:</strong>
+      {% if current_user.franchise_unit %}
+        <a href="{{ url_for('fu_view', code=current_user.franchise_unit.code) }}">
+          {{ current_user.franchise_unit.name }}
+        </a>
+      {% else %}
+        Not assigned
+      {% endif %}
+    </p>
+    {% if not current_user.is_citizen %}
+      <p class="warning">You must accept the oath to gain full citizen privileges.</p>
+      <a class="btn" href="{{ url_for('oath') }}">Complete Oath</a>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <h2>Dues</h2>
+    <p><strong>Total Paid:</strong> ${{ '%.2f'|format(dues_paid) }}</p>
+    <p>Prototype: payments not wired yet. PayPal subscription integration would go here.</p>
+  </div>
+
+  <div class="card">
+    <h2>Benefits</h2>
+    <p><strong>Total Received:</strong> ${{ '%.2f'|format(benefits_received) }}</p>
+    <p>Prototype: benefit requests & UBI pilot tools would live here.</p>
+  </div>
+
+  <div class="card">
+    <h2>Household</h2>
+    {% if current_user.household %}
+      <p>Members: {{ current_user.household.members|length }}</p>
+      <a class="btn" href="{{ url_for('household') }}">View / Edit Household</a>
+    {% else %}
+      <p>No household ledger created yet.</p>
+      <a class="btn" href="{{ url_for('household') }}">Create Household Ledger</a>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

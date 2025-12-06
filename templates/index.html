@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>Feed the World. Fund the World. Free the World.</h1>
+  <p>A global cooperative whose explicit plan is to buy PayPal and McDonald’s and turn them into
+     food, finance, and UBI infrastructure for everyone.</p>
+
+  <div class="hero-actions">
+    <a class="btn primary" href="{{ url_for('regions') }}">Explore Regions</a>
+    {% if not current_user.is_authenticated %}
+      <a class="btn" href="{{ url_for('login') }}">Become a Citizen (Login with PayPal)</a>
+    {% else %}
+      <a class="btn" href="{{ url_for('dashboard') }}">Go to My Dashboard</a>
+    {% endif %}
+  </div>
+</section>
+
+<section id="stats" class="stats-grid">
+  <div class="stat">
+    <div class="stat-label">Citizens</div>
+    <div class="stat-value">{{ total_citizens }}</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Franchise Units</div>
+    <div class="stat-value">{{ total_fus }}</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Dues Collected (All Time)</div>
+    <div class="stat-value">${{ '%.2f'|format(total_dues) }}</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Benefits Paid (All Time)</div>
+    <div class="stat-value">${{ '%.2f'|format(total_benefits) }}</div>
+  </div>
+</section>
+
+<section id="how-it-works" class="columns-3">
+  <div>
+    <h2>$20 / Month</h2>
+    <p>Each adult citizen contributes $20 per month as a cooperative due. No taxation,
+       no penalties, just voluntary commitment.</p>
+  </div>
+  <div>
+    <h2>We Buy the Rails</h2>
+    <p>We build capital to buy PayPal and McDonald’s and repurpose them as a global welfare
+       backbone: payment rails and a food grid.</p>
+  </div>
+  <div>
+    <h2>We Feed & Fund</h2>
+    <p>Free meals at hubs, $20/day opt-in UBI for citizens as the system scales, and transparent
+       ledgers for all flows.</p>
+  </div>
+</section>
+
+<section class="region-list">
+  <h2>Regions</h2>
+  <ul class="link-list">
+    {% for region in regions %}
+      <li>
+        <a href="{{ url_for('region_view', code=region.code) }}">{{ region.name }}</a>
+      </li>
+    {% else %}
+      <li>No regions yet. Prototype seed will create a World region.</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

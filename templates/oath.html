@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Citizenship Oath</h1>
+
+<pre class="oath-text">{{ oath_text }}</pre>
+
+<form method="post">
+  <label>
+    <input type="checkbox" name="accept" value="yes">
+    I accept this oath and join as a citizen of the Franchise Cooperative.
+  </label>
+  <div class="form-actions">
+    <button type="submit" class="btn primary">Accept Oath</button>
+  </div>
+</form>
+{% endblock %}

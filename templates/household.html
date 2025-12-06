@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Household Ledger</h1>
+
+<p>Franchise Unit:
+  {% if household.fu %}
+    <a href="{{ url_for('fu_view', code=household.fu.code) }}">
+      {{ household.fu.name }}
+    </a>
+  {% else %}
+    Not assigned
+  {% endif %}
+</p>
+
+<form method="post">
+  <table class="list-table">
+    <thead>
+      <tr>
+        <th>Label</th>
+        <th>Adult?</th>
+        <th>Citizen?</th>
+        <th>Relationship</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for member in household.members %}
+        <tr>
+          <td>{{ member.label }}</td>
+          <td>
+            <input type="checkbox" name="member_{{ member.id }}_is_adult"
+                   {% if member.is_adult %}checked{% endif %}>
+          </td>
+          <td>
+            <input type="checkbox" name="member_{{ member.id }}_is_citizen"
+                   {% if member.is_citizen %}checked{% endif %}>
+          </td>
+          <td>
+            <input type="text" name="member_{{ member.id }}_relationship"
+                   value="{{ member.relationship }}">
+          </td>
+          <td>
+            <input type="text" name="member_{{ member.id }}_notes"
+                   value="{{ member.notes or '' }}">
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="form-actions">
+    <button type="submit" class="btn primary">Save Household</button>
+  </div>
+</form>
+{% endblock %}
