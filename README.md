@@ -132,7 +132,6 @@ Documentation will expand as research continues.
 
 ## 📜 License
 
-Licensed under the **MIT License**.  
 See the `LICENSE` file for details.
 
 ---
