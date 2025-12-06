@@ -590,7 +590,7 @@ def init_db_command():
     db.create_all()
     seed_minimum_data()
 
-    # Ensure you have at least one admin (first user who signs in)
+    # Ensure you have at least one admin (firstgit add . user who signs in)
     first_user = User.query.first()
     if first_user and not first_user.is_admin:
         first_user.is_admin = True
